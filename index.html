@@ -1,76 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Cathal O'Sullivan | Robotics Portfolio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Cathal O'Sullivan | Robotics Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Robotics + mechanical systems. Prototypes, simulation, and shipped work." />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <div class="bg-grid"></div>
 
-<header>
-    <h1>Cathal O'Sullivan</h1>
-    <p>Mechanical Engineering Student | Robotics Systems Builder</p>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
+  <header class="wrap">
+    <div class="topbar">
+      <div class="badge">STATUS: <span class="ok">BUILDING</span></div>
+      <div class="links">
+        <a href="mailto:coscathal@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/cathal-o-sullivan-aa8a81357/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
 
-<section id="about">
-    <h2>About</h2>
-    <p>
-        I build robotics systems focused on mechanical robustness,
-        simulation-driven optimisation, and system-level thinking.
-        My interests include autonomous systems, control, and
-        engineering design under constraints.
+    <h1>
+      Cathal O’Sullivan <span class="cursor">█</span>
+    </h1>
+
+    <p class="subtitle">
+      Mechanical Engineering (TCD) → robotics systems builder.
+      I like constrained design, simulation-driven iteration, and getting prototypes to behave.
     </p>
-</section>
 
-<section id="projects">
-    <h2>Projects</h2>
-
-    <div class="project">
-        <h3>Pipe-Climbing Inspection Robot</h3>
-        <p>
-            Founder & Team Lead – Designed a semi-autonomous robotic
-            system for structural inspection of copper piping.
-        </p>
-        <a href="#">View Details</a>
+    <div class="cta">
+      <a class="btn" href="#projects">View projects</a>
+      <a class="btn ghost" href="#contact">Contact</a>
     </div>
 
-    <div class="project">
-        <h3>Lap Time Simulation Framework</h3>
-        <p>
-            Python-based system-level simulation tool for race car
-            performance optimisation.
-        </p>
-        <a href="#">View Details</a>
+    <div class="stats">
+      <div class="stat">
+        <div class="k">Focus</div>
+        <div class="v">Robotics • Mech Design • Simulation</div>
+      </div>
+      <div class="stat">
+        <div class="k">Tools</div>
+        <div class="v">SolidWorks (CSWP) • ANSYS • Python • C++</div>
+      </div>
+      <div class="stat">
+        <div class="k">Mode</div>
+        <div class="v">Team projects • rapid iteration</div>
+      </div>
     </div>
+  </header>
 
-    <div class="project">
-        <h3>Rocket Aerodynamics & CFD</h3>
+  <main class="wrap">
+    <section id="projects" class="section">
+      <div class="section-title">
+        <h2>Projects</h2>
+      </div>
+
+      <!-- Project 1 -->
+      <details class="card" open>
+        <summary>
+        <div class="sum-left">
+            <img src="assets/logos/muffindynamics.png"
+                alt="Muffin Dynamics logo"
+                class="project-logo" 
+                width="30px"/>
+            <span class="tag">Robotics</span>
+            <span class="title">Pipe-Climbing Inspection Robot</span>
+        </div>
+        <div class="sum-right">
+            <span class="meta">IMechE Design Challenge • Founder/Lead • 2026–</span>
+            <span class="chev">▾</span>
+        </div>
+        </summary>
+
+        <div class="content">
+          <p class="one-liner">
+            Semi-autonomous robot concept for external inspection of copper piping with a structured design process.
+          </p>
+
+          <div class="grid">
+            <div>
+              <h3>What I did</h3>
+              <ul>
+                <li>Owned mechanical architecture: traction concept, frame packaging, load path thinking.</li>
+                <li>Led integration across mech + electronics + sensing (team coordination + interfaces).</li>
+                <li>Set up iteration loop: constraints → prototype → test → redesign.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Proof</h3>
+              <ul>
+                <li><a href="#" target="_blank" rel="noopener">CAD renders</a> (add)</li>
+                <li><a href="#" target="_blank" rel="noopener">Short demo video</a> (add)</li>
+                <li><a href="#" target="_blank" rel="noopener">Repo / design notes</a> (add)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Project 2 -->
+      <details class="card">
+        <summary>
+        <div class="sum-left">
+            <img src="assets/logos/formulatrinity.png"
+                alt="Formula Trinity logo"
+                class="project-logo"
+                width="30px" />
+            <span class="tag">Simulation</span>
+            <span class="title">Lap-Time Simulation Framework</span>
+        </div>
+        <div class="sum-right">
+            <span class="meta">Formula Trinity • Python • 2025–</span>
+            <span class="chev">▾</span>
+        </div>
+        </summary>
+
+        <div class="content">
+          <p class="one-liner">
+            Python-based system-level lap simulation to evaluate aero + mechanical trade-offs.
+          </p>
+
+          <div class="grid">
+            <div>
+              <h3>Highlights</h3>
+              <ul>
+                <li>Modular pipeline: inputs → vehicle model → track model → outputs.</li>
+                <li>Used for design comparison, not just “nice plots”.</li>
+                <li>Clear interfaces so others can change parameters safely.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Proof</h3>
+              <ul>
+                <li><a href="#" target="_blank" rel="noopener">GitHub repo</a> (add)</li>
+                <li><a href="#" target="_blank" rel="noopener">Example outputs</a> (add graphs)</li>
+                <li><a href="#" target="_blank" rel="noopener">Short write-up</a> (add)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Project 3 -->
+      <details class="card">
+        <summary>
+        <div class="sum-left">
+            <img src="assets/logos/eirspace.png"
+                alt="Eirspace rocketry team logo"
+                class="project-logo" 
+                width="30px"/>
+            <span class="tag">CFD</span>
+            <span class="title">Rocket Aerodynamics & Fin Optimisation</span>
+        </div>
+        <div class="sum-right">
+            <span class="meta">Eirspace • ANSYS Fluent • 2025–</span>
+            <span class="chev">▾</span>
+        </div>
+        </summary>
+
+        <div class="content">
+          <p class="one-liner">
+            Simulation-driven iteration on fin geometry + material selection under aerodynamic loading.
+          </p>
+
+          <div class="grid">
+            <div>
+              <h3>What I did</h3>
+              <ul>
+                <li>Set up CFD cases to compare variants consistently.</li>
+                <li>Iterated geometry with a “design loop” mindset.</li>
+                <li>Validated design choices against load cases + constraints.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Proof</h3>
+              <ul>
+                <li><a href="#" target="_blank" rel="noopener">Before/after plots</a> (add)</li>
+                <li><a href="#" target="_blank" rel="noopener">CAD + analysis notes</a> (add)</li>
+                <li><a href="#" target="_blank" rel="noopener">Repo</a> (optional)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="media">
+  <h3 style="margin-bottom:0.6rem;">Selected Work</h3>
+
+        <div class="eirspace-grid">
+            
+            <figure class="shot">
+            <img 
+                src="assets/eirspace/Fin.png"
+                alt="Rocket fin CAD model used for aerodynamic optimisation"
+                loading="lazy"
+            />
+            <figcaption>
+                <span class="cap-tag">CAD</span>
+                Fin geometry iteration for aerodynamic optimisation
+            </figcaption>
+            </figure>
+
+            <figure class="shot">
+            <img 
+                src="assets/eirspace/Coupler.png"
+                alt="Rocket coupler CAD model structural design"
+                loading="lazy"
+            />
+            <figcaption>
+                <span class="cap-tag">CAD</span>
+                Coupler design for structural integration
+            </figcaption>
+            </figure>
+
+            <figure class="shot team-photo">
+            <img 
+                src="assets/eirspace/EirSpaceTeam.jpeg"
+                alt="Eirspace rocketry team photo"
+                loading="lazy"
+            />
+            <figcaption>
+                <span class="cap-tag">TEAM</span>
+                Eirspace Rocketry Team
+            </figcaption>
+            </figure>
+
+        </div>
+        </div>
+      </details>
+
+      <!-- Project 4 -->
+    
+      <details class="card">
+        <summary>
+          <div class="sum-left">
+            <span class="tag">Autonomous Systems</span>
+            <span class="title">Autonomous Buggy</span>
+          </div>
+          <div class="sum-right">
+            <span class="meta">Course Mechatronics Project • Full system integration</span>
+            <span class="chev">▾</span>
+          </div>
+        </summary>
+
+        <div class="content">
+          <p class="one-liner">
+            Designed and implemented an autonomous buggy capable of track navigation and obstacle detection using multi-sensor fusion and closed-loop control.
+          </p>
+
+          <div class="grid">
+            <div>
+              <h3>System Architecture</h3>
+              <ul>
+                <li>IR sensor array for line detection and lateral error estimation.</li>
+                <li>Ultrasonic sensor for obstacle distance measurement.</li>
+                <li>PID controller for steering correction and stable tracking.</li>
+                <li>WiFi communication to external GUI for monitoring and manual override.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Engineering Challenges</h3>
+              <ul>
+                <li>Tuned PID under noisy sensor input and varying surface conditions.</li>
+                <li>Handled latency and packet loss in WiFi communication.</li>
+                <li>Balanced speed vs stability trade-offs during testing.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>My Contribution</h3>
+            <ul>
+            <li>Implemented and tuned PID velocity controller.</li>
+            <li>Developed telemetry compression and decoding logic.</li>
+            <li>Integrated HuskyLens camera and April tag logic.</li>
+            <li>Implemented WiFi-based GUI</li>
+            <li>Worked on system-level debugging and hardware troubleshooting.</li>
+            </ul>
+        </div>
+        <div class="media">
+        <figure class="shot">
+            <img
+            src="assets/buggy/buggy_system_architecture.png"
+            alt="System architecture diagram showing sensors (IR, ultrasonic, encoders, Huskylens), Arduino UNO R4 WiFi, H-bridge, motors, power, and PC/WiFi communication."
+            loading="lazy"
+            />
+            <figcaption><span class="cap-tag">FIG</span> System architecture (sensing → control → actuation → telemetry)</figcaption>
+        </figure>
+
+        <div class="media-grid">
+            <figure class="shot">
+            <img
+                src="assets/buggy/buggy_gui_silver.png"
+                alt="Silver challenge GUI showing velocity/voltage meters, direction indicators, stop signal, and distance travelled."
+                loading="lazy"
+            />
+            <figcaption><span class="cap-tag">GUI</span> Silver: live telemetry + control</figcaption>
+            </figure>
+
+            <figure class="shot">
+            <img
+                src="assets/buggy/buggy_gui_gold_clean.png"
+                alt="Gold challenge GUI showing speed limit, junction turn indicator, driving mode, instruction list, and last tag display from vision system."
+                loading="lazy"
+            />
+            <figcaption><span class="cap-tag">GUI</span> Gold: vision/tag-driven mode switching</figcaption>
+            </figure>
+        </div>
+        </div>
+      </details>
+
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-title">
+        <h2>About</h2>
+      </div>
+
+      <div class="card plain">
         <p>
-            Iterative simulation-driven optimisation of fin geometry
-            using ANSYS Fluent.
+          Foundation Scholar at Trinity College Dublin (Mechanical Engineering). I work well in teams, take ownership of messy problems,
+          and like projects where mechanical design meets code and testing.
         </p>
-        <a href="#">View Details</a>
-    </div>
+        <div class="mini">
+          <span class="pill">SolidWorks (CSWP)</span>
+          <span class="pill">ANSYS</span>
+          <span class="pill">Python</span>
+          <span class="pill">C++</span>
+          <span class="pill">MATLAB</span>
+        </div>
+      </div>
+    </section>
 
-</section>
+    <section id="contact" class="section">
+      <div class="section-title">
+        <h2>Contact</h2>
+      </div>
 
-<section id="contact">
-    <h2>Contact</h2>
-    <p>Email: coscathal@gmail.com</p>
-    <p>LinkedIn: linkedin.com/in/cathal-o-sullivan-aa8a81357</p>
-    <p>GitHub: github.com/yourusername</p>
-</section>
+      <div class="card plain">
+        <p><span class="muted">Email:</span> <a href="mailto:coscathal@gmail.com">coscathal@gmail.com</a></p>
+        <p><span class="muted">LinkedIn:</span> <a href="https://www.linkedin.com/in/cathal-o-sullivan-aa8a81357/" target="_blank" rel="noopener">profile</a></p>
+        <p><span class="muted">GitHub:</span> <a href="https://github.com/yourusername" target="_blank" rel="noopener">yourusername</a></p>
+      </div>
+    </section>
 
-<footer>
-    <p>© 2026 Cathal O'Sullivan</p>
-</footer>
+    <footer class="wrap footer">
+      <div>© 2026 Cathal O’Sullivan</div>
+      <div class="muted">Built with plain HTML/CSS. No frameworks. No excuses.</div>
+    </footer>
+  </main>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

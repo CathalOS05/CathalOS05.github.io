@@ -1,9 +1,10 @@
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href'))
-            .scrollIntoView({
-                behavior: 'smooth'
-            });
-    });
+// Optional accordion: opening one project closes the others
+document.querySelectorAll('details.card').forEach((d) => {
+  d.addEventListener('toggle', () => {
+    if (d.open) {
+      document.querySelectorAll('details.card').forEach((other) => {
+        if (other !== d) other.open = false;
+      });
+    }
+  });
 });
