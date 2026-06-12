@@ -21,7 +21,7 @@ body::before {
 }
 
 body[data-theme="natural"] {
-  --section-bg: url("assets/backgrounds/nature-about.png");
+  --section-bg: url("assets/backgrounds/nature-about.svg");
 }
 
 body[data-theme="eirspace"] {
