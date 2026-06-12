@@ -41,3 +41,8 @@ body[data-theme="muffin"] {
 body[data-theme="buggy"] {
   --section-bg: url("assets/backgrounds/buggy-bg.png");
 }
+
+body::before {
+  opacity: 1 !important;
+  z-index: 9999 !important;
+}
