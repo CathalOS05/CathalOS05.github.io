@@ -15,7 +15,7 @@ const logos = {
 };
 
 // Set default theme
-body.setAttribute('data-theme', 'natural');
+body.setAttribute('data-theme', theme);
 
 const obsOptions = {
   threshold: 0.35
