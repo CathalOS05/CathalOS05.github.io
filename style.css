@@ -19,7 +19,9 @@ body::before {
   background-repeat: no-repeat;
   transition: background-image 900ms ease, filter 900ms ease, opacity 900ms ease;
 }
-
+#theme-overlay {
+  opacity: 0 !important;
+}
 body[data-theme="natural"] {
   --section-bg: url("assets/backgrounds/nature-about.svg");
 }
