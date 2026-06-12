@@ -7,10 +7,11 @@
   <meta name="description" content="Robotics + mechanical systems. Prototypes, simulation, and shipped work." />
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <div class="bg-grid"></div>
-
+  <!-- Animated nature background (particles, morphing gradient) -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div id="theme-overlay" aria-hidden="true"></div>
+  
   <header class="wrap">
     <div class="topbar">
       <div class="badge">STATUS: <span class="ok">SLEEPING</span></div>
@@ -20,19 +21,22 @@
         <a href="https://github.com/CathalOS05" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
-
-    <h1>Cathal O’Sullivan <span class="cursor">█</span></h1>
+    <h1>
+      <span id="main-logo">
+        <!-- Will animate in JS according to theme -->
+        <img src="assets/logos/eirspace.png" alt="Logo" id="logo-image" />
+      </span>
+      Cathal O’Sullivan <span class="cursor" aria-hidden="true">█</span>
+    </h1>
 
     <p class="subtitle">
       Mechanical Engineering (TCD) → robotics systems builder.
       I like constrained design, simulation-driven iteration, and getting prototypes to behave.
     </p>
-
     <div class="cta">
       <a class="btn" href="#projects">View projects</a>
       <a class="btn ghost" href="#contact">Contact</a>
     </div>
-
     <div class="stats">
       <div class="stat">
         <div class="k">Focus</div>
@@ -49,13 +53,10 @@
     </div>
   </header>
 
-  <main class="wrap">
-
- <section id="about" class="section">
-      <div class="section-title">
-        <h2>About</h2>
-      </div>
-
+  <main class="wrap" id="main-content">
+    <!-- About -->
+    <section id="about" class="section snap-section" tabindex="0" data-theme="natural">
+      <div class="section-title"><h2>About</h2></div>
       <div class="card plain">
         <p>
           Foundation Scholar at Trinity College Dublin (Mechanical Engineering). I work well in teams, take ownership of messy problems,
@@ -71,285 +72,59 @@
       </div>
     </section>
 
-    <section id="projects" class="section">
-      <div class="section-title">
-        <h2>Projects</h2>
-      </div>
-
-      <!-- Project 1: Autonomous Buggy -->
-      <details class="card" open>
-        <summary>
-          <div class="sum-left">
-            <span class="tag">Autonomous Systems</span>
-            <span class="title">Autonomous Buggy — Multi-Sensor + Vision + PID + WiFi GUI</span>
-          </div>
-          <div class="sum-right">
-            <span class="meta">Course Mechatronics Project • Full system integration</span>
-            <span class="chev">▾</span>
-          </div>
-        </summary>
-
-        <div class="content">
-          <p class="one-liner">
-            Designed and implemented an autonomous buggy capable of track navigation, obstacle handling, and AprilTag-triggered behaviours using IR, ultrasonic sensing, HuskyLens vision, PID control, and a WiFi-connected GUI.
-          </p>
-
-          <div class="grid">
-            <div>
-              <h3>System Architecture</h3>
-              <ul>
-                <li>IR sensor array for line detection and lateral error estimation.</li>
-                <li>Ultrasonic sensor for obstacle distance measurement and object following.</li>
-                <li>HuskyLens camera for AprilTag recognition and mode/behaviour switching.</li>
-                <li>PID control for speed regulation and stable tracking.</li>
-                <li>WiFi communication to external GUI for monitoring and control.</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3>Engineering Challenges</h3>
-              <ul>
-                <li>Tuned PID under noisy measurements; used smoothing to reduce velocity fluctuation.</li>
-                <li>Handled latency/packet loss in wireless messaging.</li>
-                <li>Debugged I2C interference (HuskyLens) and hardware reliability issues.</li>
-              </ul>
-            </div>
-          </div>
-
-          <h3>My Contribution</h3>
-          <ul>
-            <li>Implemented and tuned PID velocity controller.</li>
-            <li>Developed telemetry compression + decoding protocol for Arduino ↔ GUI.</li>
-            <li>Integrated HuskyLens camera and AprilTag logic for behavioural modes.</li>
-            <li>Implemented WiFi-based GUI and comms loop.</li>
-            <li>System-level debugging and hardware troubleshooting.</li>
-          </ul>
-
-          <p class="muted" style="margin-top:0.8rem;">
-            <a href="assets/buggy/2E10_Engineering_Design_Final_Report.pdf" target="_blank" rel="noopener">Full technical report (PDF)</a>
-            <span class="muted"> • Code available on request</span>
-          </p>
-
-          <div class="media">
-            <figure class="shot">
-              <img
-                src="assets/buggy/buggy_system_architecture.png"
-                alt="System architecture diagram showing sensors (IR, ultrasonic, encoders, HuskyLens), Arduino UNO R4 WiFi, H-bridge, motors, power, and PC/WiFi communication."
-                loading="lazy"
-              />
-              <figcaption><span class="cap-tag">FIG</span> System architecture (sensing → control → actuation → telemetry)</figcaption>
-            </figure>
-
-            <div class="media-grid">
-              <figure class="shot">
-                <img
-                  src="assets/buggy/wiring.png"
-                  alt="Picture of me wiring buggy"
-                  loading="lazy"
-                />
-                <figcaption><span class="cap-tag">Hardware</span> Me wiring the buggy</figcaption>
-              </figure>
-
-              <figure class="shot">
-                <img
-                  src="assets/buggy/buggy_gui_gold_clean.png"
-                  alt="Gold challenge GUI showing speed limit, junction turn indicator, driving mode, instruction list, and last tag display from vision system."
-                  loading="lazy"
-                />
-                <figcaption><span class="cap-tag">GUI</span> Gold: vision/tag-driven mode switching</figcaption>
-              </figure>
-            </div>
-          </div>
+    <!-- Projects container for scroll snapping -->
+    <section id="projects" class="projects-container">
+      <!-- EIRSPACE: Theme 1 (Rocket Aerodynamics) -->
+      <section class="section snap-section project-section" data-theme="eirspace" tabindex="0">
+        <div class="section-title">
+          <h2>
+            <span class="project-logo" id="logo-eirspace"></span>
+            Eirspace Rocket Aerodynamics & Fin Optimization
+          </h2>
         </div>
-      </details>
+        <!-- Project content... (Use your description/images here) -->
+        <!-- [Insert Eirspace HTML content here, similar to your original section, but styled for full takeover] -->
+      </section>
 
-      <!-- Project 2: Muffin Dynamics -->
-      <details class="card">
-        <summary>
-          <div class="sum-left">
-            <img src="assets/logos/muffindynamics.png" alt="Muffin Dynamics logo" class="project-logo" />
-            <span class="tag">Robotics</span>
-            <span class="title">Pipe-Climbing Inspection Robot</span>
-          </div>
-          <div class="sum-right">
-            <span class="meta">IMechE Design Challenge • Founder/Lead • 2026–</span>
-            <span class="chev">▾</span>
-          </div>
-        </summary>
-
-        <div class="content">
-          <p class="one-liner">
-            Semi-autonomous robot concept for external inspection of copper piping with a structured design process.
-          </p>
-
-          <div class="tech-block">
-            <h3>What I did</h3>
-            <ul>
-              <li>Owned mechanical architecture: traction concept, frame packaging, load path thinking.</li>
-              <li>Led integration across mech + electronics + sensing (team coordination + interfaces).</li>
-              <li>Set up iteration loop: constraints → prototype → test → redesign.</li>
-            </ul>
-
-            <h3>Design Process</h3>
-            <ul>
-              <li>Defined functional requirements and constraint envelope.</li>
-              <li>Developed mechanical traction concept for vertical pipe engagement.</li>
-              <li>Coordinated mechanical–electrical interface boundaries.</li>
-              <li>Structured iterative prototype-testing workflow.</li>
-            </ul>
-
-            <h3>Systems Focus</h3>
-            <ul>
-              <li>Failure mode analysis for slipping and instability.</li>
-              <li>Load path consideration under variable surface conditions.</li>
-              <li>Scalability for sensor integration.</li>
-            </ul>
-
-            <div class="callout">
-              <span class="label">Status</span>
-              <span>Ongoing project. Detailed CAD and control implementation remain internal.</span>
-            </div>
-          </div>
+      <!-- FORMULA TRINITY: Theme 2 (Lap-time Simulation) -->
+      <section class="section snap-section project-section" data-theme="formulatrinity" tabindex="0">
+        <div class="section-title">
+          <h2>
+            <span class="project-logo" id="logo-formulatrinity"></span>
+            Formula Trinity Lap-Time Simulation Framework
+          </h2>
         </div>
-      </details>
+        <!-- [Insert Formula Trinity HTML content here, as above...] -->
+      </section>
 
-      <!-- Project 3: Formula Trinity -->
-      <details class="card">
-        <summary>
-          <div class="sum-left">
-            <img src="assets/logos/formulatrinity.png" alt="Formula Trinity logo" class="project-logo" />
-            <span class="tag">Simulation</span>
-            <span class="title">Lap-Time Simulation Framework</span>
-          </div>
-          <div class="sum-right">
-            <span class="meta">Formula Trinity • Python • 2025–</span>
-            <span class="chev">▾</span>
-          </div>
-        </summary>
-
-        <div class="content">
-          <p class="one-liner">
-            Python-based system-level lap simulation to evaluate aero + mechanical trade-offs.
-          </p>
-
-          <div class="tech-block">
-            <h3>Highlights</h3>
-            <ul>
-              <li>Modular pipeline: inputs → vehicle model → track model → solver → outputs.</li>
-              <li>Used for design comparison, not just “nice plots”.</li>
-              <li>Clear interfaces so others can change parameters safely.</li>
-            </ul>
-
-            <h3>System Structure</h3>
-            <ul>
-              <li>Parameterised aero, mass, drag, tyres, and powertrain inputs.</li>
-              <li>Designed to evaluate system-level trade-offs rather than isolated components.</li>
-              <li>Decision-support tool: fast iteration and consistent comparisons.</li>
-            </ul>
-
-            <h3>Engineering Decisions</h3>
-            <ul>
-              <li>Balanced model fidelity vs computational cost.</li>
-              <li>Focused on actionable outputs for design decisions.</li>
-              <li>Designed clean interfaces for team parameter tuning.</li>
-            </ul>
-
-            <div class="callout">
-              <span class="label">Note</span>
-              <span>Codebase private due to team IP. Architecture and methodology described above.</span>
-            </div>
-          </div>
+      <!-- MUFFIN DYNAMICS: Theme 3 (Pipe-Climbing Robot) -->
+      <section class="section snap-section project-section" data-theme="muffin" tabindex="0">
+        <div class="section-title">
+          <h2>
+            <span class="project-logo" id="logo-muffin"></span>
+            Muffin Dynamics Pipe-Climbing Inspection Robot
+          </h2>
         </div>
-      </details>
+        <!-- [Insert Muffin Dynamics HTML content here...] -->
+      </section>
 
-      <!-- Project 4: Eirspace -->
-      <details class="card">
-        <summary>
-          <div class="sum-left">
-            <img src="assets/logos/eirspace.png" alt="Eirspace rocketry team logo" class="project-logo" />
-            <span class="tag">CFD</span>
-            <span class="title">Rocket Aerodynamics & Fin Optimisation</span>
-          </div>
-          <div class="sum-right">
-            <span class="meta">Eirspace • ANSYS Fluent • 2025–</span>
-            <span class="chev">▾</span>
-          </div>
-        </summary>
-
-        <div class="content">
-          <p class="one-liner">
-            Simulation-driven iteration on fin geometry + material selection under aerodynamic loading conditions.
-          </p>
-
-          <div class="grid">
-            <div>
-              <h3>What I did</h3>
-              <ul>
-                <li>Set up CFD cases to compare variants consistently.</li>
-                <li>Iterated geometry with a “design loop” mindset.</li>
-                <li>Validated design choices against load cases + constraints.</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3>Notes</h3>
-              <ul>
-                <li>Selected outputs and CAD renders below.</li>
-                <li>Additional analysis notes available on request.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="media">
-            <h3 style="margin-bottom:0.6rem;">Selected Work</h3>
-
-            <div class="eirspace-grid">
-              <figure class="shot">
-                <img
-                  src="assets/eirspace/Fin.png"
-                  alt="Rocket fin CAD model used for aerodynamic optimisation"
-                  loading="lazy"
-                />
-                <figcaption>
-                  <span class="cap-tag">CAD</span>
-                  Fin geometry iteration for aerodynamic optimisation
-                </figcaption>
-              </figure>
-
-              <figure class="shot">
-                <img
-                  src="assets/eirspace/Coupler.png"
-                  alt="Rocket coupler CAD model structural design"
-                  loading="lazy"
-                />
-                <figcaption>
-                  <span class="cap-tag">CAD</span>
-                  Coupler design for structural integration
-                </figcaption>
-              </figure>
-
-              <figure class="shot team-photo">
-                <img
-                  src="assets/eirspace/EirSpaceTeam.jpeg"
-                  alt="Eirspace rocketry team photo"
-                  loading="lazy"
-                />
-                <figcaption>
-                  <span class="cap-tag">TEAM</span>
-                  Eirspace Rocketry Team
-                </figcaption>
-              </figure>
-            </div>
-          </div>
+      <!-- AUTONOMOUS BUGGY: Theme 4  -->
+      <section class="section snap-section project-section" data-theme="buggy" tabindex="0">
+        <div class="section-title">
+          <h2>
+            <span class="project-logo" id="logo-buggy"></span>
+            Autonomous Buggy — Multi-Sensor + Vision + PID + WiFi GUI
+          </h2>
         </div>
-      </details>
+        <!-- [Insert Autonomous Buggy HTML content here...] -->
+      </section>
     </section>
 
-    <section id="contact" class="section">
+    <!-- Contact -->
+    <section id="contact" class="section snap-section" tabindex="0" data-theme="natural">
       <div class="section-title">
         <h2>Contact</h2>
       </div>
-
       <div class="card plain">
         <p><span class="muted">Email:</span> <a href="mailto:coscathal@gmail.com">coscathal@gmail.com</a></p>
         <p><span class="muted">LinkedIn:</span> <a href="https://www.linkedin.com/in/cathal-o-sullivan-aa8a81357/" target="_blank" rel="noopener">cathal-o-sullivan-aa8a81357</a></p>
@@ -361,7 +136,6 @@
       <div>© 2026 Cathal O’Sullivan</div>
     </footer>
   </main>
-
   <script src="script.js"></script>
 </body>
-</html>
+</html> 
