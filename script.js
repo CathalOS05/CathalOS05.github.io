@@ -44,10 +44,26 @@ const sectionObserver = new window.IntersectionObserver((entries) => {
 sections.forEach(el => sectionObserver.observe(el));
 
 // Set overlay background using theme variable (for animated backgrounds later)
+const overlayColors = {
+  eirspace: "radial-gradient(ellipse at 60% 18%, #12192cdd 65%, #281c32ee 100%)",
+  formulatrinity: "linear-gradient(120deg, #3e0d13cc 0%, #a308241a 100%)",
+  muffin: "linear-gradient(110deg, #4b361e99 5%, #b7965b66 95%)",
+  buggy: "radial-gradient(ellipse at 40% 65%, #199b6fbb 55%, #19467355 100%)",
+  natural: "linear-gradient(120deg, #b5ecd588 0%, #eaf4ee77 100%)",
+};
+
 function sectionSetThemeOverlay(theme) {
-  // Could animate overlay or trigger canvas animations depending on theme!
-  themeOverlay.style.background = getComputedStyle(document.body).getPropertyValue('--project-bg');
-}
+  const col = overlayColors[theme] || overlayColors.natural;
+  themeOverlay.style.background = col;
+  // fade in overlay
+  themeOverlay.classList.add('active');
+  // after 800ms, gently fade it out if not still on the same section
+  clearTimeout(themeOverlay._fadeTimeout);
+  themeOverlay._fadeTimeout = setTimeout(
+    () => themeOverlay.classList.remove('active'), 
+    800  // Tune for the best effect (700-1000ms)
+  );
+} 
 
 // ---- PARTICLE/STARFIELD CANVAS ANIMATION ----
 const canvas = document.getElementById('bg-canvas');
