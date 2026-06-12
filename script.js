@@ -1,135 +1,246 @@
-// --- THEME + SCROLL LOGIC ---
+// ======================================================
+// THEME + SCROLL LOGIC
+// ======================================================
+
 const sections = document.querySelectorAll('.snap-section');
 const themeOverlay = document.getElementById('theme-overlay');
 const body = document.body;
 const mainLogo = document.getElementById('main-logo');
+
 const logos = {
-  // IDs must match the section's logo placeholder
-  eirspace:  'assets/logos/eirspace.png',
+  eirspace: 'assets/logos/eirspace.png',
   formulatrinity: 'assets/logos/formulatrinity.png',
   muffin: 'assets/logos/muffindynamics.png',
   buggy: 'assets/logos/buggy.png'
 };
 
-// Intersection Observer
-const obsOptions = { threshold: 0.55 };
-const sectionObserver = new window.IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      // Which theme?
-      const theme = entry.target.getAttribute('data-theme');
-      body.setAttribute('data-theme', theme || 'natural');
-      sectionSetThemeOverlay(theme || 'natural');
+// Set default theme
+body.setAttribute('data-theme', 'natural');
 
-      // Animate logo
-      const logoId = `logo-${theme}`;
-      document.querySelectorAll('.project-logo').forEach(el => el.classList.remove('animate-in'));
-      const logoEl = document.getElementById(logoId);
-      if (logoEl) {
-        logoEl.classList.add('animate-in');
-        // Swap main logo as needed too
-        if (logos[theme]) {
-          mainLogo.innerHTML = `<img src="${logos[theme]}" alt="Logo" />`;
-          setTimeout(() => mainLogo.classList.add('animate-in'), 100);
-        } else {
-          mainLogo.innerHTML = '';
-        }
-      }
-      // Animate content progressive reveal
-      entry.target.querySelectorAll('.fade-slide').forEach(e => e.classList.add('in'));
+const obsOptions = {
+  threshold: 0.35
+};
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+
+    const theme = entry.target.dataset.theme || 'natural';
+
+    body.setAttribute('data-theme', theme);
+
+    setThemeOverlay(theme);
+
+    // Update main logo
+    const logoImg = document.getElementById('logo-image');
+
+    if (logoImg && logos[theme]) {
+      logoImg.src = logos[theme];
+      logoImg.classList.remove('animate-in');
+
+      requestAnimationFrame(() => {
+        logoImg.classList.add('animate-in');
+      });
     }
+
+    // Reveal content
+    entry.target
+      .querySelectorAll('.fade-slide')
+      .forEach((el) => el.classList.add('in'));
   });
 }, obsOptions);
 
-sections.forEach(el => sectionObserver.observe(el));
+sections.forEach((section) => {
+  sectionObserver.observe(section);
+});
 
-// Set overlay background using theme variable (for animated backgrounds later)
+// ======================================================
+// THEME OVERLAY
+// ======================================================
+
 const overlayColors = {
-  eirspace: "radial-gradient(ellipse at 60% 18%, #12192cdd 65%, #281c32ee 100%)",
-  formulatrinity: "linear-gradient(120deg, #3e0d13cc 0%, #a308241a 100%)",
-  muffin: "linear-gradient(110deg, #4b361e99 5%, #b7965b66 95%)",
-  buggy: "radial-gradient(ellipse at 40% 65%, #199b6fbb 55%, #19467355 100%)",
-  natural: "linear-gradient(120deg, #b5ecd588 0%, #eaf4ee77 100%)",
+  eirspace:
+    'radial-gradient(circle at center, rgba(15,25,50,.95), rgba(5,8,20,.95))',
+
+  formulatrinity:
+    'linear-gradient(135deg, rgba(80,0,20,.9), rgba(20,20,20,.95))',
+
+  muffin:
+    'linear-gradient(135deg, rgba(80,60,40,.85), rgba(30,30,30,.9))',
+
+  buggy:
+    'linear-gradient(135deg, rgba(0,80,60,.85), rgba(0,20,40,.9))',
+
+  natural:
+    'linear-gradient(135deg, rgba(134,187,216,.25), rgba(117,142,79,.25))'
 };
 
-function sectionSetThemeOverlay(theme) {
-  const col = overlayColors[theme] || overlayColors.natural;
-  themeOverlay.style.background = col;
-  // fade in overlay
-  themeOverlay.classList.add('active');
-  // after 800ms, gently fade it out if not still on the same section
-  clearTimeout(themeOverlay._fadeTimeout);
-  themeOverlay._fadeTimeout = setTimeout(
-    () => themeOverlay.classList.remove('active'), 
-    800  // Tune for the best effect (700-1000ms)
-  );
-} 
+function setThemeOverlay(theme) {
+  themeOverlay.style.background =
+    overlayColors[theme] || overlayColors.natural;
 
-// ---- PARTICLE/STARFIELD CANVAS ANIMATION ----
+  themeOverlay.classList.add('active');
+
+  clearTimeout(themeOverlay.fadeTimer);
+
+  themeOverlay.fadeTimer = setTimeout(() => {
+    themeOverlay.classList.remove('active');
+  }, 700);
+}
+
+// ======================================================
+// CANVAS PARTICLE BACKGROUND
+// ======================================================
+
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 
-let stars = [];
+let particles = [];
+
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
+
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-function createStars(count) {
-  stars = [];
-  for (let i = 0; i < count; ++i) {
-    stars.push({
+function createParticles(count = 150) {
+  particles = [];
+
+  for (let i = 0; i < count; i++) {
+    particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: Math.random() * 1.5 + 0.3,
-      speed: Math.random() * 0.25 + 0.04,
-      tw: Math.random() * Math.PI * 2
+      r: Math.random() * 2 + 0.3,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      phase: Math.random() * Math.PI * 2
     });
   }
 }
-createStars(180);
 
-function animateStars() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  // Color by theme
-  const theme = body.getAttribute('data-theme') || 'natural';
-  let color = '#9be9f3';
-  if (theme === 'eirspace') color = '#fff4ed';
-  else if (theme === 'formulatrinity') color = '#ff193a';
-  else if (theme === 'muffin') color = '#b0d7ff';
-  else if (theme === 'buggy') color = '#67ffce';
-  // Draw
-  for (const s of stars) {
+createParticles();
+
+function getParticleColor(theme) {
+  switch (theme) {
+    case 'eirspace':
+      return '#ffffff';
+
+    case 'formulatrinity':
+      return '#ff3048';
+
+    case 'muffin':
+      return '#d0b080';
+
+    case 'buggy':
+      return '#4effc1';
+
+    default:
+      return '#ffffff';
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const theme = body.dataset.theme || 'natural';
+  const color = getParticleColor(theme);
+
+  particles.forEach((p) => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.phase += 0.03;
+
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+
     ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r + 0.4*Math.sin(s.tw), 0, 2 * Math.PI);
-    ctx.fillStyle = color + '99';
-    ctx.globalAlpha = 0.33;
+    ctx.arc(
+      p.x,
+      p.y,
+      p.r + Math.sin(p.phase) * 0.3,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.25;
     ctx.fill();
     ctx.globalAlpha = 1;
-    s.x += s.speed;
-    if (s.x > canvas.width) s.x = 0;
-    s.tw += 0.035;
-  }
-  requestAnimationFrame(animateStars);
-}
-animateStars();
+  });
 
-// ---- ACCESSIBILITY ----
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.getElementById('bg-canvas').style.display = 'none';
-  document.getElementById('theme-overlay').style.display = 'none';
+  requestAnimationFrame(animateParticles);
 }
 
-// ---- OPTIONAL: Smooth scroll for anchor links ----
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', function(e){
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      target.focus();
+animateParticles();
+
+// ======================================================
+// REDUCED MOTION ACCESSIBILITY
+// ======================================================
+
+if (
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+) {
+  canvas.style.display = 'none';
+  themeOverlay.style.display = 'none';
+}
+
+// ======================================================
+// SMOOTH SCROLL
+// ======================================================
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    const target = document.querySelector(
+      link.getAttribute('href')
+    );
+
+    if (!target) return;
+
+    e.preventDefault();
+
+    target.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+});
+
+// ======================================================
+// OPTIONAL: ACTIVE SECTION HIGHLIGHTING
+// ======================================================
+
+const navLinks = document.querySelectorAll('a[href^="#"]');
+
+function updateActiveLink(id) {
+  navLinks.forEach((link) => {
+    const href = link.getAttribute('href');
+
+    if (href === `#${id}`) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
     }
   });
-}); 
+}
+
+const navObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        updateActiveLink(entry.target.id);
+      }
+    });
+  },
+  {
+    threshold: 0.5
+  }
+);
+
+document.querySelectorAll('section[id]').forEach((section) => {
+  navObserver.observe(section);
+});
