@@ -23,7 +23,7 @@ body::before {
   opacity: 0 !important;
 }
 body[data-theme="natural"] {
-  --section-bg: url("assets/backgrounds/nature-about.svg");
+  --section-bg: url("assets/backgrounds/nature-about.png");
 }
 
 body[data-theme="eirspace"] {
